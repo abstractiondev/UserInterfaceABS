@@ -41,6 +41,7 @@ Additional info here!</xs:documentation>
 			<xs:element name="FlowLayout"/>
 			<xs:element name="TableLayout"/>
 			<xs:element name="StackLayout"/>
+			<xs:element name="GridLayout"/>
 		</xs:choice>
 		<xs:attribute name="name" type="xs:string" use="required"/>
 	</xs:complexType>
