@@ -92,12 +92,12 @@ Additional info here!</xs:documentation>
 			<xs:element name="DataContext" type="DataContextType"/>
 		</xs:sequence>
 		<xs:attribute name="name" type="xs:string" use="required"/>
+		<xs:attribute name="domainName" type="xs:string" use="required"/>
 	</xs:complexType>
 	<xs:complexType name="UserInterfacesType">
 		<xs:sequence>
-			<xs:element name="UserInterface" type="UserInterfaceType"/>
+			<xs:element name="UserInterface" type="UserInterfaceType" maxOccurs="unbounded"/>
 		</xs:sequence>
-		<xs:attribute name="domainName" type="xs:string" use="required"/>
 	</xs:complexType>
 	<xs:complexType name="UserInterfaceAbstractionType">
 		<xs:sequence>

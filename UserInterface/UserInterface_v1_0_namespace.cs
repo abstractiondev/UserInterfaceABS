@@ -23,48 +23,16 @@ namespace UserInterface_v1_0 {
     [System.Xml.Serialization.XmlRootAttribute("UserInterfaceAbstraction", Namespace="", IsNullable=false)]
     public partial class UserInterfaceAbstractionType {
         
-        private UserInterfacesType userInterfacesField;
+        private UserInterfaceType[] userInterfacesField;
         
         /// <remarks/>
-        public UserInterfacesType UserInterfaces {
+        [System.Xml.Serialization.XmlArrayItemAttribute("UserInterface", IsNullable=false)]
+        public UserInterfaceType[] UserInterfaces {
             get {
                 return this.userInterfacesField;
             }
             set {
                 this.userInterfacesField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "2.0.50727.3038")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class UserInterfacesType {
-        
-        private UserInterfaceType userInterfaceField;
-        
-        private string domainNameField;
-        
-        /// <remarks/>
-        public UserInterfaceType UserInterface {
-            get {
-                return this.userInterfaceField;
-            }
-            set {
-                this.userInterfaceField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string domainName {
-            get {
-                return this.domainNameField;
-            }
-            set {
-                this.domainNameField = value;
             }
         }
     }
@@ -83,6 +51,8 @@ namespace UserInterface_v1_0 {
         private RootType[] dataContextField;
         
         private string nameField;
+        
+        private string domainNameField;
         
         /// <remarks/>
         public PagesType Pages {
@@ -124,6 +94,17 @@ namespace UserInterface_v1_0 {
             }
             set {
                 this.nameField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public string domainName {
+            get {
+                return this.domainNameField;
+            }
+            set {
+                this.domainNameField = value;
             }
         }
     }
@@ -199,6 +180,7 @@ namespace UserInterface_v1_0 {
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("FlowLayout", typeof(object))]
+        [System.Xml.Serialization.XmlElementAttribute("GridLayout", typeof(object))]
         [System.Xml.Serialization.XmlElementAttribute("StackLayout", typeof(object))]
         [System.Xml.Serialization.XmlElementAttribute("TableLayout", typeof(object))]
         [System.Xml.Serialization.XmlChoiceIdentifierAttribute("ItemElementName")]
@@ -378,6 +360,9 @@ namespace UserInterface_v1_0 {
         
         /// <remarks/>
         FlowLayout,
+        
+        /// <remarks/>
+        GridLayout,
         
         /// <remarks/>
         StackLayout,
