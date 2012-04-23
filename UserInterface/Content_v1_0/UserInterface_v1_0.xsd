@@ -2,12 +2,119 @@
 <!-- edited with XMLSpy v2011 rel. 2 sp1 (http://www.altova.com) by Kalle Launiala (Citrus Solutions Oy) -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
 	<xs:complexType name="PropertyType">
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="String">
+					<xs:complexType>
+						<xs:attribute name="minLength" type="xs:int" use="required"/>
+						<xs:attribute name="maxLength" type="xs:int" use="required"/>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="Numeric">
+					<xs:complexType>
+						<xs:attribute name="rangeMin" type="xs:int" use="required"/>
+						<xs:attribute name="rangeMax" type="xs:int" use="required"/>
+						<xs:attribute name="scale" type="xs:int" use="required"/>
+						<xs:attribute name="unit" type="xs:int" use="required"/>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="ChoiceList">
+					<xs:annotation>
+						<xs:documentation>Note!
+
+Value + description pair, where the description can be localized.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:attribute name="controlType" use="required">
+							<xs:simpleType>
+								<xs:restriction base="xs:string">
+									<xs:enumeration value="CheckBox"/>
+									<xs:enumeration value="Dropdown"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:attribute>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="MultipleChoiceList">
+					<xs:complexType>
+						<xs:attribute name="controlType" use="required">
+							<xs:simpleType>
+								<xs:restriction base="xs:string">
+									<xs:enumeration value="CheckBox"/>
+									<xs:enumeration value="Dropdown"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:attribute>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="Lookup"/>
+				<xs:element name="Boolean"/>
+				<xs:element name="DateTime">
+					<xs:complexType>
+						<xs:attribute name="dateTimeType" use="required">
+							<xs:simpleType>
+								<xs:restriction base="xs:string">
+									<xs:enumeration value="Date"/>
+									<xs:enumeration value="DateTime"/>
+									<xs:enumeration value="Time"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:attribute>
+						<xs:attribute name="utcDisplayStyle" default="Local">
+							<xs:annotation>
+								<xs:documentation>(Opt = "Local") Local or UTC; with or without timezone info.</xs:documentation>
+							</xs:annotation>
+							<xs:simpleType>
+								<xs:restriction base="xs:string">
+									<xs:enumeration value="Local"/>
+									<xs:enumeration value="UTC"/>
+									<xs:enumeration value="LocalWithTimezoneInfo"/>
+									<xs:enumeration value="UTCWithTimezoneInfo"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:attribute>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="AttachmentBlob">
+					<xs:complexType>
+						<xs:attribute name="mediaType" use="required">
+							<xs:simpleType>
+								<xs:restriction base="xs:string">
+									<xs:enumeration value="AnyBinary"/>
+									<xs:enumeration value="Image"/>
+									<xs:enumeration value="Audio"/>
+									<xs:enumeration value="Video"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:attribute>
+						<xs:attribute name="extension" type="xs:string">
+							<xs:annotation>
+								<xs:documentation>(Opt) File format extension.
+
+Useful when there is certain file such as .jpg or .png to provide the data as such.
+
+No need to specify the format in detail.
+
+NOTE! Might require more detailed format though for serving the data.</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+					</xs:complexType>
+				</xs:element>
+			</xs:choice>
+			<xs:element name="Label"/>
+			<xs:element name="Info">
+				<xs:annotation>
+					<xs:documentation>Description, tooltip, ie. info about the field.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
 		<xs:attribute name="name" type="xs:string" use="required"/>
 		<xs:attribute name="dataType" type="xs:string" use="required">
 			<xs:annotation>
 				<xs:documentation>Datatype for property.</xs:documentation>
 			</xs:annotation>
 		</xs:attribute>
+		<xs:attribute name="isRequired" type="xs:boolean" use="required"/>
 	</xs:complexType>
 	<xs:complexType name="PropertiesType">
 		<xs:sequence>
@@ -56,7 +163,32 @@ Additional info here!</xs:documentation>
 	</xs:complexType>
 	<xs:complexType name="SemanticModelType">
 		<xs:sequence>
-			<xs:element name="Class" type="ClassType" maxOccurs="unbounded"/>
+			<xs:element name="UIClass" type="ClassType" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>mjono minimipituudella
+valintalista radio/dropdown
+labelit
+monivalinta checkboxlista
+=> arvo + selite (selite monikielinen)
+lookup => stringin pohjalta + muut filtterit?
+numeric arvo (range, scale, unit)
+description => pitempi kuvaus, html tai ei, lokalisoitu?
+boolean
+date
+datetime
+time
+dokumentti/liitetiedosto (BLOB)
+URL
+- previewpane
+- haut
+
+- muutoshistoria
+- grouppaus osa propertyistä labeleineen
+- grouppaus per nimet
+- previewit per nimet
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="PagesType">
@@ -88,6 +220,127 @@ Additional info here!</xs:documentation>
 	<xs:complexType name="UserInterfaceType">
 		<xs:sequence>
 			<xs:element name="Pages" type="PagesType" minOccurs="0"/>
+			<xs:element name="UIProcessModel" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="LaunchPads" minOccurs="0">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="LaunchPad" maxOccurs="unbounded">
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="InputMapping" minOccurs="0" maxOccurs="unbounded">
+													<xs:complexType>
+														<xs:attribute name="processInputFullPropertyName" type="xs:string" use="required">
+															<xs:annotation>
+																<xs:documentation>Full class.model.navigated syntax for describign the process semantic model property field where the UI field is mapped.</xs:documentation>
+															</xs:annotation>
+														</xs:attribute>
+														<xs:attribute name="uiFieldName" type="xs:string" use="required">
+															<xs:annotation>
+																<xs:documentation>Uniquely identifying the field to get the data from.</xs:documentation>
+															</xs:annotation>
+														</xs:attribute>
+													</xs:complexType>
+												</xs:element>
+												<xs:element name="ProcessExitAction" minOccurs="0" maxOccurs="unbounded">
+													<xs:annotation>
+														<xs:documentation>Actions to perform at process exit. Usually generates a call to UI code to call the LaunchPad_name_ExitAction_name with process output and exit result.</xs:documentation>
+													</xs:annotation>
+													<xs:complexType>
+														<xs:attribute name="name" type="xs:string" use="required"/>
+														<xs:attribute name="designDesc" type="xs:string" use="required"/>
+													</xs:complexType>
+												</xs:element>
+											</xs:sequence>
+											<xs:attribute name="name" type="xs:string" use="required"/>
+											<xs:attribute name="designDesc" type="xs:string" use="required"/>
+											<xs:attribute name="uiProcessNameToLaunch" type="xs:string" use="required"/>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="UIProcesses">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="UIProcess" maxOccurs="unbounded">
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="ProcessInput" minOccurs="0">
+													<xs:annotation>
+														<xs:documentation>(Opti) Process input model.
+
+Process can obtain its input information from current active roots or other information (such as "today"), so the process specific input model is not always required.</xs:documentation>
+													</xs:annotation>
+													<xs:complexType>
+														<xs:attribute name="semanticModelClassName" type="xs:string" use="required"/>
+													</xs:complexType>
+												</xs:element>
+												<xs:element name="ProcessStep" maxOccurs="unbounded">
+													<xs:complexType>
+														<xs:sequence>
+															<xs:element name="StepInput" minOccurs="0">
+																<xs:annotation>
+																	<xs:documentation>(Opt) Step input model.
+
+Similar to ProcessInput.</xs:documentation>
+																</xs:annotation>
+																<xs:complexType>
+																	<xs:attribute name="semanticModelClassName" type="xs:string" use="required"/>
+																</xs:complexType>
+															</xs:element>
+															<xs:element name="StepOutput" minOccurs="0">
+																<xs:annotation>
+																	<xs:documentation>(Opt) Step output  model.
+
+Similar to ProcessOutput.</xs:documentation>
+																</xs:annotation>
+																<xs:complexType>
+																	<xs:attribute name="semanticModelClassName" type="xs:string" use="required"/>
+																</xs:complexType>
+															</xs:element>
+														</xs:sequence>
+														<xs:attribute name="name" type="xs:string" use="required"/>
+														<xs:attribute name="designDesc" type="xs:string" use="required"/>
+														<xs:attribute name="stepType" use="required">
+															<xs:annotation>
+																<xs:documentation>Process step type:
+- User
+- SystemUI
+- SystemBusinessLogic</xs:documentation>
+															</xs:annotation>
+															<xs:simpleType>
+																<xs:restriction base="xs:string">
+																	<xs:enumeration value="User"/>
+																	<xs:enumeration value="SystemUI"/>
+																	<xs:enumeration value="SystemBusinessLogic"/>
+																</xs:restriction>
+															</xs:simpleType>
+														</xs:attribute>
+													</xs:complexType>
+												</xs:element>
+												<xs:element name="ProcessOutput" minOccurs="0">
+													<xs:annotation>
+														<xs:documentation>(Opti) Process output model.
+
+Process output can be reflected to back-end calls or to modifications to current active roots, so the process specific output model is not always required.</xs:documentation>
+													</xs:annotation>
+													<xs:complexType>
+														<xs:attribute name="semanticModelClassName" type="xs:string" use="required"/>
+													</xs:complexType>
+												</xs:element>
+											</xs:sequence>
+											<xs:attribute name="name" type="xs:string" use="required"/>
+											<xs:attribute name="designDesc" type="xs:string" use="required"/>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
 			<xs:element name="SemanticModel" type="SemanticModelType"/>
 			<xs:element name="DataContext" type="DataContextType"/>
 		</xs:sequence>
