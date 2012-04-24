@@ -47,6 +47,8 @@ public partial class UserInterfaceType {
     
     private PagesType pagesField;
     
+    private UIProcessModelType uIProcessModelField;
+    
     private ClassType[] semanticModelField;
     
     private RootType[] dataContextField;
@@ -66,7 +68,17 @@ public partial class UserInterfaceType {
     }
     
     /// <remarks/>
-    [System.Xml.Serialization.XmlArrayItemAttribute("Class", IsNullable=false)]
+    public UIProcessModelType UIProcessModel {
+        get {
+            return this.uIProcessModelField;
+        }
+        set {
+            this.uIProcessModelField = value;
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlArrayItemAttribute("UIClass", IsNullable=false)]
     public ClassType[] SemanticModel {
         get {
             return this.semanticModelField;
@@ -175,7 +187,7 @@ public partial class LayoutType {
     
     private object itemField;
     
-    private ItemChoiceType itemElementNameField;
+    private ItemChoiceType1 itemElementNameField;
     
     private string nameField;
     
@@ -196,7 +208,7 @@ public partial class LayoutType {
     
     /// <remarks/>
     [System.Xml.Serialization.XmlIgnoreAttribute()]
-    public ItemChoiceType ItemElementName {
+    public ItemChoiceType1 ItemElementName {
         get {
             return this.itemElementNameField;
         }
@@ -213,6 +225,692 @@ public partial class LayoutType {
         }
         set {
             this.nameField = value;
+        }
+    }
+}
+
+/// <remarks/>
+[System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "2.0.50727.3038")]
+[System.SerializableAttribute()]
+[System.Diagnostics.DebuggerStepThroughAttribute()]
+[System.ComponentModel.DesignerCategoryAttribute("code")]
+public partial class ProcessOutputType {
+    
+    private string semanticModelClassNameField;
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlAttributeAttribute()]
+    public string semanticModelClassName {
+        get {
+            return this.semanticModelClassNameField;
+        }
+        set {
+            this.semanticModelClassNameField = value;
+        }
+    }
+}
+
+/// <remarks/>
+[System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "2.0.50727.3038")]
+[System.SerializableAttribute()]
+[System.Diagnostics.DebuggerStepThroughAttribute()]
+[System.ComponentModel.DesignerCategoryAttribute("code")]
+public partial class BeforeExecuteValidationType {
+    
+    private string nameField;
+    
+    private string designDescField;
+    
+    private string conditionExpressionField;
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlAttributeAttribute()]
+    public string name {
+        get {
+            return this.nameField;
+        }
+        set {
+            this.nameField = value;
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlAttributeAttribute()]
+    public string designDesc {
+        get {
+            return this.designDescField;
+        }
+        set {
+            this.designDescField = value;
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlAttributeAttribute()]
+    public string conditionExpression {
+        get {
+            return this.conditionExpressionField;
+        }
+        set {
+            this.conditionExpressionField = value;
+        }
+    }
+}
+
+/// <remarks/>
+[System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "2.0.50727.3038")]
+[System.SerializableAttribute()]
+[System.Diagnostics.DebuggerStepThroughAttribute()]
+[System.ComponentModel.DesignerCategoryAttribute("code")]
+public partial class ProcessInputType {
+    
+    private string semanticModelClassNameField;
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlAttributeAttribute()]
+    public string semanticModelClassName {
+        get {
+            return this.semanticModelClassNameField;
+        }
+        set {
+            this.semanticModelClassNameField = value;
+        }
+    }
+}
+
+/// <remarks/>
+[System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "2.0.50727.3038")]
+[System.SerializableAttribute()]
+[System.Diagnostics.DebuggerStepThroughAttribute()]
+[System.ComponentModel.DesignerCategoryAttribute("code")]
+public partial class UIProcessType {
+    
+    private ProcessInputType processInputField;
+    
+    private BeforeExecuteValidationType[] beforeExecuteValidationField;
+    
+    private object[] processFlowField;
+    
+    private ProcessOutputType processOutputField;
+    
+    private string nameField;
+    
+    private string designDescField;
+    
+    private string semanticModelClassNameField;
+    
+    /// <remarks/>
+    public ProcessInputType ProcessInput {
+        get {
+            return this.processInputField;
+        }
+        set {
+            this.processInputField = value;
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlElementAttribute("BeforeExecuteValidation")]
+    public BeforeExecuteValidationType[] BeforeExecuteValidation {
+        get {
+            return this.beforeExecuteValidationField;
+        }
+        set {
+            this.beforeExecuteValidationField = value;
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlArrayItemAttribute("ExecutionItem", typeof(ExecutionItemType), IsNullable=false)]
+    [System.Xml.Serialization.XmlArrayItemAttribute("ForEach", typeof(ForEachType), IsNullable=false)]
+    [System.Xml.Serialization.XmlArrayItemAttribute("If", typeof(IfType), IsNullable=false)]
+    public object[] ProcessFlow {
+        get {
+            return this.processFlowField;
+        }
+        set {
+            this.processFlowField = value;
+        }
+    }
+    
+    /// <remarks/>
+    public ProcessOutputType ProcessOutput {
+        get {
+            return this.processOutputField;
+        }
+        set {
+            this.processOutputField = value;
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlAttributeAttribute()]
+    public string name {
+        get {
+            return this.nameField;
+        }
+        set {
+            this.nameField = value;
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlAttributeAttribute()]
+    public string designDesc {
+        get {
+            return this.designDescField;
+        }
+        set {
+            this.designDescField = value;
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlAttributeAttribute()]
+    public string semanticModelClassName {
+        get {
+            return this.semanticModelClassNameField;
+        }
+        set {
+            this.semanticModelClassNameField = value;
+        }
+    }
+}
+
+/// <remarks/>
+[System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "2.0.50727.3038")]
+[System.SerializableAttribute()]
+[System.Diagnostics.DebuggerStepThroughAttribute()]
+[System.ComponentModel.DesignerCategoryAttribute("code")]
+public partial class ExecutionItemType {
+    
+    private string nameField;
+    
+    private string designDescField;
+    
+    private ExecutionItemTypeStepType stepTypeField;
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlAttributeAttribute()]
+    public string name {
+        get {
+            return this.nameField;
+        }
+        set {
+            this.nameField = value;
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlAttributeAttribute()]
+    public string designDesc {
+        get {
+            return this.designDescField;
+        }
+        set {
+            this.designDescField = value;
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlAttributeAttribute()]
+    public ExecutionItemTypeStepType stepType {
+        get {
+            return this.stepTypeField;
+        }
+        set {
+            this.stepTypeField = value;
+        }
+    }
+}
+
+/// <remarks/>
+[System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "2.0.50727.3038")]
+[System.SerializableAttribute()]
+[System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true)]
+public enum ExecutionItemTypeStepType {
+    
+    /// <remarks/>
+    User,
+    
+    /// <remarks/>
+    SystemUI,
+    
+    /// <remarks/>
+    SystemBusinessLogic,
+}
+
+/// <remarks/>
+[System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "2.0.50727.3038")]
+[System.SerializableAttribute()]
+[System.Diagnostics.DebuggerStepThroughAttribute()]
+[System.ComponentModel.DesignerCategoryAttribute("code")]
+public partial class ForEachType {
+    
+    private object[] executionBlockField;
+    
+    private string nameField;
+    
+    private string designDescField;
+    
+    private string inputCollectionField;
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlArrayItemAttribute("ExecutionItem", typeof(ExecutionItemType), IsNullable=false)]
+    [System.Xml.Serialization.XmlArrayItemAttribute("ForEach", typeof(ForEachType), IsNullable=false)]
+    [System.Xml.Serialization.XmlArrayItemAttribute("If", typeof(IfType), IsNullable=false)]
+    public object[] ExecutionBlock {
+        get {
+            return this.executionBlockField;
+        }
+        set {
+            this.executionBlockField = value;
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlAttributeAttribute()]
+    public string name {
+        get {
+            return this.nameField;
+        }
+        set {
+            this.nameField = value;
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlAttributeAttribute()]
+    public string designDesc {
+        get {
+            return this.designDescField;
+        }
+        set {
+            this.designDescField = value;
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlAttributeAttribute()]
+    public string inputCollection {
+        get {
+            return this.inputCollectionField;
+        }
+        set {
+            this.inputCollectionField = value;
+        }
+    }
+}
+
+/// <remarks/>
+[System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "2.0.50727.3038")]
+[System.SerializableAttribute()]
+[System.Diagnostics.DebuggerStepThroughAttribute()]
+[System.ComponentModel.DesignerCategoryAttribute("code")]
+public partial class IfType {
+    
+    private object[] executionBlockField;
+    
+    private ElseIfType[] elseIfField;
+    
+    private ElseType elseField;
+    
+    private string nameField;
+    
+    private string designDescField;
+    
+    private string conditionExpressionField;
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlArrayItemAttribute("ExecutionItem", typeof(ExecutionItemType), IsNullable=false)]
+    [System.Xml.Serialization.XmlArrayItemAttribute("ForEach", typeof(ForEachType), IsNullable=false)]
+    [System.Xml.Serialization.XmlArrayItemAttribute("If", typeof(IfType), IsNullable=false)]
+    public object[] ExecutionBlock {
+        get {
+            return this.executionBlockField;
+        }
+        set {
+            this.executionBlockField = value;
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlElementAttribute("ElseIf")]
+    public ElseIfType[] ElseIf {
+        get {
+            return this.elseIfField;
+        }
+        set {
+            this.elseIfField = value;
+        }
+    }
+    
+    /// <remarks/>
+    public ElseType Else {
+        get {
+            return this.elseField;
+        }
+        set {
+            this.elseField = value;
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlAttributeAttribute()]
+    public string name {
+        get {
+            return this.nameField;
+        }
+        set {
+            this.nameField = value;
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlAttributeAttribute()]
+    public string designDesc {
+        get {
+            return this.designDescField;
+        }
+        set {
+            this.designDescField = value;
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlAttributeAttribute()]
+    public string conditionExpression {
+        get {
+            return this.conditionExpressionField;
+        }
+        set {
+            this.conditionExpressionField = value;
+        }
+    }
+}
+
+/// <remarks/>
+[System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "2.0.50727.3038")]
+[System.SerializableAttribute()]
+[System.Diagnostics.DebuggerStepThroughAttribute()]
+[System.ComponentModel.DesignerCategoryAttribute("code")]
+public partial class ElseIfType {
+    
+    private object[] executionBlockField;
+    
+    private string nameField;
+    
+    private string designDescField;
+    
+    private string conditionExpressionField;
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlArrayItemAttribute("ExecutionItem", typeof(ExecutionItemType), IsNullable=false)]
+    [System.Xml.Serialization.XmlArrayItemAttribute("ForEach", typeof(ForEachType), IsNullable=false)]
+    [System.Xml.Serialization.XmlArrayItemAttribute("If", typeof(IfType), IsNullable=false)]
+    public object[] ExecutionBlock {
+        get {
+            return this.executionBlockField;
+        }
+        set {
+            this.executionBlockField = value;
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlAttributeAttribute()]
+    public string name {
+        get {
+            return this.nameField;
+        }
+        set {
+            this.nameField = value;
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlAttributeAttribute()]
+    public string designDesc {
+        get {
+            return this.designDescField;
+        }
+        set {
+            this.designDescField = value;
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlAttributeAttribute()]
+    public string conditionExpression {
+        get {
+            return this.conditionExpressionField;
+        }
+        set {
+            this.conditionExpressionField = value;
+        }
+    }
+}
+
+/// <remarks/>
+[System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "2.0.50727.3038")]
+[System.SerializableAttribute()]
+[System.Diagnostics.DebuggerStepThroughAttribute()]
+[System.ComponentModel.DesignerCategoryAttribute("code")]
+public partial class ElseType {
+    
+    private object[] executionBlockField;
+    
+    private string nameField;
+    
+    private string designDescField;
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlArrayItemAttribute("ExecutionItem", typeof(ExecutionItemType), IsNullable=false)]
+    [System.Xml.Serialization.XmlArrayItemAttribute("ForEach", typeof(ForEachType), IsNullable=false)]
+    [System.Xml.Serialization.XmlArrayItemAttribute("If", typeof(IfType), IsNullable=false)]
+    public object[] ExecutionBlock {
+        get {
+            return this.executionBlockField;
+        }
+        set {
+            this.executionBlockField = value;
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlAttributeAttribute()]
+    public string name {
+        get {
+            return this.nameField;
+        }
+        set {
+            this.nameField = value;
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlAttributeAttribute()]
+    public string designDesc {
+        get {
+            return this.designDescField;
+        }
+        set {
+            this.designDescField = value;
+        }
+    }
+}
+
+/// <remarks/>
+[System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "2.0.50727.3038")]
+[System.SerializableAttribute()]
+[System.Diagnostics.DebuggerStepThroughAttribute()]
+[System.ComponentModel.DesignerCategoryAttribute("code")]
+public partial class ProcessExitActionType {
+    
+    private string nameField;
+    
+    private string designDescField;
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlAttributeAttribute()]
+    public string name {
+        get {
+            return this.nameField;
+        }
+        set {
+            this.nameField = value;
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlAttributeAttribute()]
+    public string designDesc {
+        get {
+            return this.designDescField;
+        }
+        set {
+            this.designDescField = value;
+        }
+    }
+}
+
+/// <remarks/>
+[System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "2.0.50727.3038")]
+[System.SerializableAttribute()]
+[System.Diagnostics.DebuggerStepThroughAttribute()]
+[System.ComponentModel.DesignerCategoryAttribute("code")]
+public partial class InputMappingType {
+    
+    private string processInputFullPropertyNameField;
+    
+    private string uiFieldNameField;
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlAttributeAttribute()]
+    public string processInputFullPropertyName {
+        get {
+            return this.processInputFullPropertyNameField;
+        }
+        set {
+            this.processInputFullPropertyNameField = value;
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlAttributeAttribute()]
+    public string uiFieldName {
+        get {
+            return this.uiFieldNameField;
+        }
+        set {
+            this.uiFieldNameField = value;
+        }
+    }
+}
+
+/// <remarks/>
+[System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "2.0.50727.3038")]
+[System.SerializableAttribute()]
+[System.Diagnostics.DebuggerStepThroughAttribute()]
+[System.ComponentModel.DesignerCategoryAttribute("code")]
+public partial class LaunchPadType {
+    
+    private InputMappingType[] inputMappingField;
+    
+    private ProcessExitActionType[] processExitActionField;
+    
+    private string nameField;
+    
+    private string designDescField;
+    
+    private string uiProcessNameToLaunchField;
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlElementAttribute("InputMapping")]
+    public InputMappingType[] InputMapping {
+        get {
+            return this.inputMappingField;
+        }
+        set {
+            this.inputMappingField = value;
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlElementAttribute("ProcessExitAction")]
+    public ProcessExitActionType[] ProcessExitAction {
+        get {
+            return this.processExitActionField;
+        }
+        set {
+            this.processExitActionField = value;
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlAttributeAttribute()]
+    public string name {
+        get {
+            return this.nameField;
+        }
+        set {
+            this.nameField = value;
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlAttributeAttribute()]
+    public string designDesc {
+        get {
+            return this.designDescField;
+        }
+        set {
+            this.designDescField = value;
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlAttributeAttribute()]
+    public string uiProcessNameToLaunch {
+        get {
+            return this.uiProcessNameToLaunchField;
+        }
+        set {
+            this.uiProcessNameToLaunchField = value;
+        }
+    }
+}
+
+/// <remarks/>
+[System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "2.0.50727.3038")]
+[System.SerializableAttribute()]
+[System.Diagnostics.DebuggerStepThroughAttribute()]
+[System.ComponentModel.DesignerCategoryAttribute("code")]
+public partial class UIProcessModelType {
+    
+    private LaunchPadType[] launchPadsField;
+    
+    private UIProcessType[] uIProcessesField;
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlArrayItemAttribute("LaunchPad", IsNullable=false)]
+    public LaunchPadType[] LaunchPads {
+        get {
+            return this.launchPadsField;
+        }
+        set {
+            this.launchPadsField = value;
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlArrayItemAttribute("UIProcess", IsNullable=false)]
+    public UIProcessType[] UIProcesses {
+        get {
+            return this.uIProcessesField;
+        }
+        set {
+            this.uIProcessesField = value;
         }
     }
 }
@@ -326,9 +1024,69 @@ public partial class ClassType {
 [System.ComponentModel.DesignerCategoryAttribute("code")]
 public partial class PropertyType {
     
+    private object itemField;
+    
+    private ItemChoiceType itemElementNameField;
+    
+    private object labelField;
+    
+    private object infoField;
+    
     private string nameField;
     
     private string dataTypeField;
+    
+    private bool isRequiredField;
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlElementAttribute("AttachmentBlob", typeof(AttachmentBlobType))]
+    [System.Xml.Serialization.XmlElementAttribute("Boolean", typeof(object))]
+    [System.Xml.Serialization.XmlElementAttribute("ChoiceList", typeof(ChoiceListType))]
+    [System.Xml.Serialization.XmlElementAttribute("DateTime", typeof(DateTimeType))]
+    [System.Xml.Serialization.XmlElementAttribute("Lookup", typeof(object))]
+    [System.Xml.Serialization.XmlElementAttribute("MultipleChoiceList", typeof(MultipleChoiceListType))]
+    [System.Xml.Serialization.XmlElementAttribute("Numeric", typeof(NumericType))]
+    [System.Xml.Serialization.XmlElementAttribute("String", typeof(StringType))]
+    [System.Xml.Serialization.XmlChoiceIdentifierAttribute("ItemElementName")]
+    public object Item {
+        get {
+            return this.itemField;
+        }
+        set {
+            this.itemField = value;
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlIgnoreAttribute()]
+    public ItemChoiceType ItemElementName {
+        get {
+            return this.itemElementNameField;
+        }
+        set {
+            this.itemElementNameField = value;
+        }
+    }
+    
+    /// <remarks/>
+    public object Label {
+        get {
+            return this.labelField;
+        }
+        set {
+            this.labelField = value;
+        }
+    }
+    
+    /// <remarks/>
+    public object Info {
+        get {
+            return this.infoField;
+        }
+        set {
+            this.infoField = value;
+        }
+    }
     
     /// <remarks/>
     [System.Xml.Serialization.XmlAttributeAttribute()]
@@ -351,6 +1109,306 @@ public partial class PropertyType {
             this.dataTypeField = value;
         }
     }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlAttributeAttribute()]
+    public bool isRequired {
+        get {
+            return this.isRequiredField;
+        }
+        set {
+            this.isRequiredField = value;
+        }
+    }
+}
+
+/// <remarks/>
+[System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "2.0.50727.3038")]
+[System.SerializableAttribute()]
+[System.Diagnostics.DebuggerStepThroughAttribute()]
+[System.ComponentModel.DesignerCategoryAttribute("code")]
+public partial class AttachmentBlobType {
+    
+    private AttachmentBlobTypeMediaType mediaTypeField;
+    
+    private string extensionField;
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlAttributeAttribute()]
+    public AttachmentBlobTypeMediaType mediaType {
+        get {
+            return this.mediaTypeField;
+        }
+        set {
+            this.mediaTypeField = value;
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlAttributeAttribute()]
+    public string extension {
+        get {
+            return this.extensionField;
+        }
+        set {
+            this.extensionField = value;
+        }
+    }
+}
+
+/// <remarks/>
+[System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "2.0.50727.3038")]
+[System.SerializableAttribute()]
+[System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true)]
+public enum AttachmentBlobTypeMediaType {
+    
+    /// <remarks/>
+    AnyBinary,
+    
+    /// <remarks/>
+    Image,
+    
+    /// <remarks/>
+    Audio,
+    
+    /// <remarks/>
+    Video,
+}
+
+/// <remarks/>
+[System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "2.0.50727.3038")]
+[System.SerializableAttribute()]
+[System.Diagnostics.DebuggerStepThroughAttribute()]
+[System.ComponentModel.DesignerCategoryAttribute("code")]
+public partial class ChoiceListType {
+    
+    private ChoiceListTypeControlType controlTypeField;
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlAttributeAttribute()]
+    public ChoiceListTypeControlType controlType {
+        get {
+            return this.controlTypeField;
+        }
+        set {
+            this.controlTypeField = value;
+        }
+    }
+}
+
+/// <remarks/>
+[System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "2.0.50727.3038")]
+[System.SerializableAttribute()]
+[System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true)]
+public enum ChoiceListTypeControlType {
+    
+    /// <remarks/>
+    CheckBox,
+    
+    /// <remarks/>
+    Dropdown,
+}
+
+/// <remarks/>
+[System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "2.0.50727.3038")]
+[System.SerializableAttribute()]
+[System.Diagnostics.DebuggerStepThroughAttribute()]
+[System.ComponentModel.DesignerCategoryAttribute("code")]
+public partial class DateTimeType {
+    
+    private DateTimeTypeDateTimeType dateTimeTypeField;
+    
+    private DateTimeTypeUtcDisplayStyle utcDisplayStyleField;
+    
+    public DateTimeType() {
+        this.utcDisplayStyleField = DateTimeTypeUtcDisplayStyle.Local;
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlAttributeAttribute()]
+    public DateTimeTypeDateTimeType dateTimeType {
+        get {
+            return this.dateTimeTypeField;
+        }
+        set {
+            this.dateTimeTypeField = value;
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlAttributeAttribute()]
+    [System.ComponentModel.DefaultValueAttribute(DateTimeTypeUtcDisplayStyle.Local)]
+    public DateTimeTypeUtcDisplayStyle utcDisplayStyle {
+        get {
+            return this.utcDisplayStyleField;
+        }
+        set {
+            this.utcDisplayStyleField = value;
+        }
+    }
+}
+
+/// <remarks/>
+[System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "2.0.50727.3038")]
+[System.SerializableAttribute()]
+[System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true)]
+public enum DateTimeTypeDateTimeType {
+    
+    /// <remarks/>
+    Date,
+    
+    /// <remarks/>
+    DateTime,
+    
+    /// <remarks/>
+    Time,
+}
+
+/// <remarks/>
+[System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "2.0.50727.3038")]
+[System.SerializableAttribute()]
+[System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true)]
+public enum DateTimeTypeUtcDisplayStyle {
+    
+    /// <remarks/>
+    Local,
+    
+    /// <remarks/>
+    UTC,
+    
+    /// <remarks/>
+    LocalWithTimezoneInfo,
+    
+    /// <remarks/>
+    UTCWithTimezoneInfo,
+}
+
+/// <remarks/>
+[System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "2.0.50727.3038")]
+[System.SerializableAttribute()]
+[System.Diagnostics.DebuggerStepThroughAttribute()]
+[System.ComponentModel.DesignerCategoryAttribute("code")]
+public partial class MultipleChoiceListType {
+    
+    private MultipleChoiceListTypeControlType controlTypeField;
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlAttributeAttribute()]
+    public MultipleChoiceListTypeControlType controlType {
+        get {
+            return this.controlTypeField;
+        }
+        set {
+            this.controlTypeField = value;
+        }
+    }
+}
+
+/// <remarks/>
+[System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "2.0.50727.3038")]
+[System.SerializableAttribute()]
+[System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true)]
+public enum MultipleChoiceListTypeControlType {
+    
+    /// <remarks/>
+    CheckBox,
+    
+    /// <remarks/>
+    Dropdown,
+}
+
+/// <remarks/>
+[System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "2.0.50727.3038")]
+[System.SerializableAttribute()]
+[System.Diagnostics.DebuggerStepThroughAttribute()]
+[System.ComponentModel.DesignerCategoryAttribute("code")]
+public partial class NumericType {
+    
+    private int rangeMinField;
+    
+    private int rangeMaxField;
+    
+    private int scaleField;
+    
+    private int unitField;
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlAttributeAttribute()]
+    public int rangeMin {
+        get {
+            return this.rangeMinField;
+        }
+        set {
+            this.rangeMinField = value;
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlAttributeAttribute()]
+    public int rangeMax {
+        get {
+            return this.rangeMaxField;
+        }
+        set {
+            this.rangeMaxField = value;
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlAttributeAttribute()]
+    public int scale {
+        get {
+            return this.scaleField;
+        }
+        set {
+            this.scaleField = value;
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlAttributeAttribute()]
+    public int unit {
+        get {
+            return this.unitField;
+        }
+        set {
+            this.unitField = value;
+        }
+    }
+}
+
+/// <remarks/>
+[System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "2.0.50727.3038")]
+[System.SerializableAttribute()]
+[System.Diagnostics.DebuggerStepThroughAttribute()]
+[System.ComponentModel.DesignerCategoryAttribute("code")]
+public partial class StringType {
+    
+    private int minLengthField;
+    
+    private int maxLengthField;
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlAttributeAttribute()]
+    public int minLength {
+        get {
+            return this.minLengthField;
+        }
+        set {
+            this.minLengthField = value;
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlAttributeAttribute()]
+    public int maxLength {
+        get {
+            return this.maxLengthField;
+        }
+        set {
+            this.maxLengthField = value;
+        }
+    }
 }
 
 /// <remarks/>
@@ -358,6 +1416,37 @@ public partial class PropertyType {
 [System.SerializableAttribute()]
 [System.Xml.Serialization.XmlTypeAttribute(IncludeInSchema=false)]
 public enum ItemChoiceType {
+    
+    /// <remarks/>
+    AttachmentBlob,
+    
+    /// <remarks/>
+    Boolean,
+    
+    /// <remarks/>
+    ChoiceList,
+    
+    /// <remarks/>
+    DateTime,
+    
+    /// <remarks/>
+    Lookup,
+    
+    /// <remarks/>
+    MultipleChoiceList,
+    
+    /// <remarks/>
+    Numeric,
+    
+    /// <remarks/>
+    String,
+}
+
+/// <remarks/>
+[System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "2.0.50727.3038")]
+[System.SerializableAttribute()]
+[System.Xml.Serialization.XmlTypeAttribute(IncludeInSchema=false)]
+public enum ItemChoiceType1 {
     
     /// <remarks/>
     FlowLayout,
