@@ -139,6 +139,26 @@ URL
 		<xs:sequence>
 			<xs:element name="Pages" type="PagesType" minOccurs="0"/>
 			<xs:element name="UIProcessModel" type="UIProcessModelType" minOccurs="0"/>
+			<xs:element name="Views" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="View" maxOccurs="unbounded">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="Content">
+										<xs:complexType>
+											<xs:choice/>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+								<xs:attribute name="name" type="xs:string" use="required"/>
+								<xs:attribute name="designDesc" type="xs:string" use="required"/>
+								<xs:attribute name="semanticModelClassName" type="xs:string" use="required"/>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
 			<xs:element name="SemanticModel" type="SemanticModelType"/>
 			<xs:element name="DataContext" type="DataContextType"/>
 		</xs:sequence>
