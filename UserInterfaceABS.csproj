@@ -44,7 +44,13 @@
     <Compile Include="UserInterface\UserInterface_v1_0_namespace.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Options.xml" />
     <Content Include="README.txt" />
+    <Content Include="UserInterface\HTML5ViewGenerator_v1_0.html">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>HTML5ViewGenerator_v1_0.tt</DependentUpon>
+    </Content>
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
@@ -58,6 +64,10 @@
       <SubType>Designer</SubType>
       <Generator>T4ScriptFileGenerator</Generator>
       <LastGenOutput>UserInterface_v1_0.tt</LastGenOutput>
+    </None>
+    <None Include="UserInterface\HTML5ViewGenerator_v1_0.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>HTML5ViewGenerator_v1_0.html</LastGenOutput>
     </None>
     <None Include="UserInterface\UserInterface_v1_0.ttinclude" />
   </ItemGroup>

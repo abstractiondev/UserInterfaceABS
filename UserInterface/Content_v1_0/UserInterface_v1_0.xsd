@@ -19,7 +19,40 @@ Value + description pair, where the description can be localized.</xs:documentat
 				<xs:element name="DateTime" type="DateTimeType"/>
 				<xs:element name="AttachmentBlob" type="AttachmentBlobType"/>
 			</xs:choice>
-			<xs:element name="Label"/>
+			<xs:element name="LabelText" type="xs:string"/>
+			<xs:element name="Info">
+				<xs:annotation>
+					<xs:documentation>Description, tooltip, ie. info about the field.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="name" type="xs:string" use="required"/>
+		<xs:attribute name="dataType" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:documentation>Datatype for property.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="isRequired" type="xs:boolean" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="ViewPropertyType">
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="String" type="StringType"/>
+				<xs:element name="Numeric" type="NumericType"/>
+				<xs:element name="ChoiceList" type="ChoiceListType">
+					<xs:annotation>
+						<xs:documentation>Note!
+
+Value + description pair, where the description can be localized.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="MultipleChoiceList" type="MultipleChoiceListType"/>
+				<xs:element name="Lookup"/>
+				<xs:element name="Boolean"/>
+				<xs:element name="DateTime" type="DateTimeType"/>
+				<xs:element name="AttachmentBlob" type="AttachmentBlobType"/>
+			</xs:choice>
+			<xs:element name="LabelText" type="xs:string"/>
 			<xs:element name="Info">
 				<xs:annotation>
 					<xs:documentation>Description, tooltip, ie. info about the field.</xs:documentation>
@@ -139,26 +172,7 @@ URL
 		<xs:sequence>
 			<xs:element name="Pages" type="PagesType" minOccurs="0"/>
 			<xs:element name="UIProcessModel" type="UIProcessModelType" minOccurs="0"/>
-			<xs:element name="Views" minOccurs="0">
-				<xs:complexType>
-					<xs:sequence>
-						<xs:element name="View" maxOccurs="unbounded">
-							<xs:complexType>
-								<xs:sequence>
-									<xs:element name="Content">
-										<xs:complexType>
-											<xs:choice/>
-										</xs:complexType>
-									</xs:element>
-								</xs:sequence>
-								<xs:attribute name="name" type="xs:string" use="required"/>
-								<xs:attribute name="designDesc" type="xs:string" use="required"/>
-								<xs:attribute name="semanticModelClassName" type="xs:string" use="required"/>
-							</xs:complexType>
-						</xs:element>
-					</xs:sequence>
-				</xs:complexType>
-			</xs:element>
+			<xs:element name="Views" type="ViewsType" minOccurs="0"/>
 			<xs:element name="SemanticModel" type="SemanticModelType"/>
 			<xs:element name="DataContext" type="DataContextType"/>
 		</xs:sequence>
@@ -401,5 +415,49 @@ No need to specify the format in detail.
 NOTE! Might require more detailed format though for serving the data.</xs:documentation>
 			</xs:annotation>
 		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="ColumnType">
+		<xs:attribute name="name" type="xs:string" use="required"/>
+		<xs:attribute name="designDesc" type="xs:string" use="required"/>
+		<xs:attribute name="label" type="xs:string" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="GridLayoutType">
+		<xs:sequence>
+			<xs:element name="Column" type="ColumnType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ChildViewType">
+		<xs:attribute name="childViewName" type="xs:string" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="ViewLayoutType">
+		<xs:choice minOccurs="0">
+			<xs:element name="GridLayout" type="GridLayoutType"/>
+		</xs:choice>
+		<xs:attribute name="layoutType" use="required">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="FlowLayout"/>
+					<xs:enumeration value="VerticalStack"/>
+					<xs:enumeration value="HorizontalStack"/>
+					<xs:enumeration value="Grid"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="ViewType">
+		<xs:sequence>
+			<xs:element name="ViewLayout" type="ViewLayoutType"/>
+			<xs:choice maxOccurs="unbounded">
+				<xs:element name="ViewProperty" type="ViewPropertyType"/>
+				<xs:element name="ChildView" type="ChildViewType"/>
+			</xs:choice>
+		</xs:sequence>
+		<xs:attribute name="name" type="xs:string" use="required"/>
+		<xs:attribute name="designDesc" type="xs:string" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="ViewsType">
+		<xs:sequence>
+			<xs:element name="View" type="ViewType" maxOccurs="unbounded"/>
+		</xs:sequence>
 	</xs:complexType>
 </xs:schema>
