@@ -31,6 +31,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.VisualStudio.TextTemplating.Interfaces.10.0, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -41,6 +42,21 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UserInterface\MVCControllerGenerator_v1_0.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MVCControllerGenerator_v1_0.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UserInterface\MVCModelGenerator_v1_0.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MVCModelGenerator_v1_0.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UserInterface\MVCViewGenerator_v1_0.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MVCViewGenerator_v1_0.tt</DependentUpon>
+    </Compile>
     <Compile Include="UserInterface\UserInterface_v1_0_namespace.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -70,6 +86,18 @@
     <None Include="UserInterface\HTML5ViewGenerator_v1_0.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>HTML5ViewGenerator_v1_0.html</LastGenOutput>
+    </None>
+    <None Include="UserInterface\MVCControllerGenerator_v1_0.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>MVCControllerGenerator_v1_0.cs</LastGenOutput>
+    </None>
+    <None Include="UserInterface\MVCModelGenerator_v1_0.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>MVCModelGenerator_v1_0.cs</LastGenOutput>
+    </None>
+    <None Include="UserInterface\MVCViewGenerator_v1_0.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>MVCViewGenerator_v1_0.cs</LastGenOutput>
     </None>
     <None Include="UserInterface\UserInterface_v1_0.ttinclude" />
   </ItemGroup>

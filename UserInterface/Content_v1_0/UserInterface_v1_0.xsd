@@ -1,6 +1,408 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- edited with XMLSpy v2011 rel. 2 sp1 (http://www.altova.com) by Kalle Launiala (Citrus Solutions Oy) -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:element name="UserInterfaceAbstraction" type="UserInterfaceAbstractionType">
+		<xs:annotation>
+			<xs:documentation>Comment describing your root element</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="AttachmentBlobType">
+		<xs:complexContent>
+			<xs:extension base="VisibleControlType">
+				<xs:attribute name="mediaType" use="required">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:enumeration value="AnyBinary"/>
+							<xs:enumeration value="Image"/>
+							<xs:enumeration value="Audio"/>
+							<xs:enumeration value="Video"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:attribute>
+				<xs:attribute name="extension" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>(Opt) File format extension.
+
+Useful when there is certain file such as .jpg or .png to provide the data as such.
+
+No need to specify the format in detail.
+
+NOTE! Might require more detailed format though for serving the data.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="BeforeExecuteValidationType">
+		<xs:attribute name="name" type="xs:string" use="required"/>
+		<xs:attribute name="designDesc" type="xs:string" use="required"/>
+		<xs:attribute name="conditionExpression" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>(Opt) If given, the execution is validated against given conditional expression evaluated within process's data context.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="BooleanType">
+		<xs:complexContent>
+			<xs:extension base="VisibleControlType"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="ButtonType">
+		<xs:complexContent>
+			<xs:extension base="VisibleControlType"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="ChildViewType">
+		<xs:attribute name="childViewName" type="xs:string" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="ChoiceListType">
+		<xs:complexContent>
+			<xs:extension base="VisibleControlType">
+				<xs:sequence>
+					<xs:element name="Choice" type="ChoiceType" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="ChoiceType">
+		<xs:sequence>
+			<xs:element name="Label" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="xs:string">
+							<xs:attribute name="language" type="xs:string"/>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="value" type="xs:string" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="ClassesType">
+		<xs:sequence/>
+		<xs:attribute name="namespaceName" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:documentation>Namespace where the code will be generated.
+
+Additional info here!</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="ClassType">
+		<xs:sequence>
+			<xs:element name="Properties" type="PropertiesType"/>
+		</xs:sequence>
+		<xs:attribute name="name" type="xs:string" use="required"/>
+		<xs:attribute name="designDesc" type="xs:string" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="ColumnType">
+		<xs:attribute name="name" type="xs:string" use="required"/>
+		<xs:attribute name="designDesc" type="xs:string" use="required"/>
+		<xs:attribute name="label" type="xs:string" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="CommandAreaType">
+		<xs:complexContent>
+			<xs:extension base="ContainerType"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="ContainerType">
+		<xs:complexContent>
+			<xs:extension base="ControlType">
+				<xs:sequence>
+					<xs:element name="Content" type="ViewStructureType"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="ControllerActionsType">
+		<xs:sequence>
+			<xs:element name="ControllerAction" type="ControllerActionType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ControllerActionType">
+		<xs:sequence>
+			<xs:element name="ViewStructure" type="ViewStructureType"/>
+		</xs:sequence>
+		<xs:attribute name="name" type="xs:string" use="required"/>
+		<xs:attribute name="designDesc" type="xs:string" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="ControlType" abstract="true">
+		<xs:attribute name="name" type="xs:string" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="CustomViewType">
+		<xs:complexContent>
+			<xs:extension base="ControlType"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="DataContextType">
+		<xs:sequence>
+			<xs:element name="Root" type="RootType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DateTimeType">
+		<xs:attribute name="dateTimeType" use="required">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="Date"/>
+					<xs:enumeration value="DateTime"/>
+					<xs:enumeration value="Time"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="utcDisplayStyle" default="Local">
+			<xs:annotation>
+				<xs:documentation>(Opt = "Local") Local or UTC; with or without timezone info.</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="Local"/>
+					<xs:enumeration value="UTC"/>
+					<xs:enumeration value="LocalWithTimezoneInfo"/>
+					<xs:enumeration value="UTCWithTimezoneInfo"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="DescriptionType">
+		<xs:complexContent>
+			<xs:extension base="VisibleControlType">
+				<xs:attribute name="minLength" type="xs:int" use="required"/>
+				<xs:attribute name="maxLength" type="xs:int" use="required"/>
+				<xs:attribute name="isRequired" type="xs:boolean" use="required"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="DisplayType">
+		<xs:complexContent>
+			<xs:extension base="ControlType">
+				<xs:attribute name="fromControl" type="xs:string" use="required"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="ElseIfType">
+		<xs:sequence>
+			<xs:element name="ExecutionBlock" type="ProcessFlowType"/>
+		</xs:sequence>
+		<xs:attribute name="name" type="xs:string" use="required"/>
+		<xs:attribute name="designDesc" type="xs:string" use="required"/>
+		<xs:attribute name="conditionExpression" type="xs:string" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="ElseType">
+		<xs:sequence>
+			<xs:element name="ExecutionBlock" type="ProcessFlowType"/>
+		</xs:sequence>
+		<xs:attribute name="name" type="xs:string" use="required"/>
+		<xs:attribute name="designDesc" type="xs:string" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="ExecutionItemType">
+		<xs:attribute name="name" type="xs:string" use="required"/>
+		<xs:attribute name="designDesc" type="xs:string" use="required"/>
+		<xs:attribute name="stepType" use="required">
+			<xs:annotation>
+				<xs:documentation>Process step type:
+- User
+- SystemUI
+- SystemBusinessLogic</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="User"/>
+					<xs:enumeration value="SystemUI"/>
+					<xs:enumeration value="SystemBusinessLogic"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="FieldSetType">
+		<xs:complexContent>
+			<xs:extension base="VisibleContainerType"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="ForEachType">
+		<xs:sequence>
+			<xs:element name="ExecutionBlock" type="ProcessFlowType"/>
+		</xs:sequence>
+		<xs:attribute name="name" type="xs:string" use="required"/>
+		<xs:attribute name="designDesc" type="xs:string" use="required"/>
+		<xs:attribute name="inputCollection" type="xs:string" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="GridLayoutType">
+		<xs:sequence>
+			<xs:element name="Column" type="ColumnType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="HiddenType">
+		<xs:attribute name="name" type="xs:string" use="required"/>
+		<xs:attribute name="dataType" type="xs:string" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="IfType">
+		<xs:sequence>
+			<xs:element name="ExecutionBlock" type="ProcessFlowType"/>
+			<xs:element name="ElseIf" type="ElseIfType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="Else" type="ElseType" minOccurs="0"/>
+		</xs:sequence>
+		<xs:attribute name="name" type="xs:string" use="required"/>
+		<xs:attribute name="designDesc" type="xs:string" use="required"/>
+		<xs:attribute name="conditionExpression" type="xs:string" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="InfoType">
+		<xs:complexContent>
+			<xs:extension base="ControlType">
+				<xs:sequence>
+					<xs:element name="Content" type="xs:string"/>
+				</xs:sequence>
+				<xs:attribute name="language" type="xs:string"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="InputMappingType">
+		<xs:attribute name="processInputFullPropertyName" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:documentation>Full class.model.navigated syntax for describign the process semantic model property field where the UI field is mapped.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="uiFieldName" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:documentation>Uniquely identifying the field to get the data from.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="LabelType">
+		<xs:simpleContent>
+			<xs:extension base="xs:string">
+				<xs:attribute name="language" type="xs:string"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="LaunchPadsType">
+		<xs:sequence>
+			<xs:element name="LaunchPad" type="LaunchPadType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="LaunchPadType">
+		<xs:sequence>
+			<xs:element name="InputMapping" type="InputMappingType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="ProcessExitAction" type="ProcessExitActionType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Actions to perform at process exit. Usually generates a call to UI code to call the LaunchPad_name_ExitAction_name with process output and exit result.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="name" type="xs:string" use="required"/>
+		<xs:attribute name="designDesc" type="xs:string" use="required"/>
+		<xs:attribute name="uiProcessNameToLaunch" type="xs:string" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="LayoutType">
+		<xs:choice>
+			<xs:element name="FlowLayout"/>
+			<xs:element name="TableLayout"/>
+			<xs:element name="StackLayout"/>
+			<xs:element name="GridLayout"/>
+		</xs:choice>
+		<xs:attribute name="name" type="xs:string" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="MultiChoiceListType">
+		<xs:complexContent>
+			<xs:extension base="VisibleControlType">
+				<xs:sequence>
+					<xs:element name="Choice" type="ChoiceType" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="MultipleChoiceListType">
+		<xs:attribute name="controlType" use="required">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="CheckBox"/>
+					<xs:enumeration value="Dropdown"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="NumericType">
+		<xs:complexContent>
+			<xs:extension base="VisibleControlType">
+				<xs:attribute name="rangeMin" type="xs:int" use="required"/>
+				<xs:attribute name="rangeMax" type="xs:int" use="required"/>
+				<xs:attribute name="scale" type="xs:int" use="required"/>
+				<xs:attribute name="unit" type="xs:int" use="required"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="PagesType">
+		<xs:sequence>
+			<xs:element name="Page">
+				<xs:complexType>
+					<xs:choice>
+						<xs:element name="Sections">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="Section">
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="Layout" type="LayoutType"/>
+											</xs:sequence>
+											<xs:attribute name="name" type="xs:string" use="required"/>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="Layout" type="LayoutType"/>
+					</xs:choice>
+					<xs:attribute name="name" type="xs:string" use="required"/>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PageType">
+		<xs:complexContent>
+			<xs:extension base="VisibleContainerType">
+				<xs:attribute name="pageLocation" use="required">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:enumeration value="First"/>
+							<xs:enumeration value="Last"/>
+							<xs:enumeration value="Middle"/>
+							<xs:enumeration value="Disconnected">
+								<xs:annotation>
+									<xs:documentation>Disconnected = Page is not in automatically supported navigation structure and does not get the navigation buttons automatically created.</xs:documentation>
+								</xs:annotation>
+							</xs:enumeration>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="ParameterType">
+		<xs:attribute name="name" type="xs:string" use="required"/>
+		<xs:attribute name="dataType" type="xs:string" use="required"/>
+		<xs:attribute name="isRequired" type="xs:boolean" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="ProcessExitActionType">
+		<xs:attribute name="name" type="xs:string" use="required"/>
+		<xs:attribute name="designDesc" type="xs:string" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="ProcessFlowType">
+		<xs:choice maxOccurs="unbounded">
+			<xs:element name="ExecutionItem" type="ExecutionItemType"/>
+			<xs:element name="If" type="IfType"/>
+			<xs:element name="ForEach" type="ForEachType"/>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="ProcessInputType">
+		<xs:attribute name="semanticModelClassName" type="xs:string" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="ProcessOutputType">
+		<xs:attribute name="semanticModelClassName" type="xs:string" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="PropertiesType">
+		<xs:sequence>
+			<xs:element name="Property" type="PropertyType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
 	<xs:complexType name="PropertyType">
 		<xs:sequence>
 			<xs:choice>
@@ -33,6 +435,139 @@ Value + description pair, where the description can be localized.</xs:documentat
 			</xs:annotation>
 		</xs:attribute>
 		<xs:attribute name="isRequired" type="xs:boolean" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="RootType">
+		<xs:attribute name="name" type="xs:string" use="required"/>
+		<xs:attribute name="className" type="xs:string" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="SemanticModelType">
+		<xs:sequence>
+			<xs:element name="UIClass" type="ClassType" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>mjono minimipituudella
+valintalista radio/dropdown
+labelit
+monivalinta checkboxlista
+=> arvo + selite (selite monikielinen)
+lookup => stringin pohjalta + muut filtterit?
+numeric arvo (range, scale, unit)
+description => pitempi kuvaus, html tai ei, lokalisoitu?
+boolean
+date
+datetime
+time
+dokumentti/liitetiedosto (BLOB)
+URL
+- previewpane
+- haut
+
+- muutoshistoria
+- grouppaus osa propertyistä labeleineen
+- grouppaus per nimet
+- previewit per nimet
+</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="StringType">
+		<xs:attribute name="minLength" type="xs:int" use="required"/>
+		<xs:attribute name="maxLength" type="xs:int" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="TextType">
+		<xs:complexContent>
+			<xs:extension base="VisibleControlType">
+				<xs:attribute name="minLength" type="xs:int" use="required"/>
+				<xs:attribute name="maxLength" type="xs:int" use="required"/>
+				<xs:attribute name="isRequired" type="xs:boolean" use="required"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="UIProcessesType">
+		<xs:sequence>
+			<xs:element name="UIProcess" type="UIProcessType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="UIProcessModelType">
+		<xs:sequence>
+			<xs:element name="LaunchPads" type="LaunchPadsType" minOccurs="0"/>
+			<xs:element name="UIProcesses" type="UIProcessesType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="UIProcessType">
+		<xs:sequence>
+			<xs:element name="ProcessInput" type="ProcessInputType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>(Opti) Process input model.
+
+Process can obtain its input information from current active roots or other information (such as "today"), so the process specific input model is not always required.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="BeforeExecuteValidation" type="BeforeExecuteValidationType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>(Opt) Validation before execution. If validation fails, process returns with the value/reason set to BeforeExecuteValidation structure of its return value.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ProcessFlow" type="ProcessFlowType"/>
+			<xs:element name="ProcessOutput" type="ProcessOutputType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>(Opti) Process output model.
+
+Process output can be reflected to back-end calls or to modifications to current active roots, so the process specific output model is not always required.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="name" type="xs:string" use="required"/>
+		<xs:attribute name="designDesc" type="xs:string" use="required"/>
+		<xs:attribute name="semanticModelClassName" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>(Opt) Process data context class name. If set, the process assigns the context given as parameter as its active context.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="UserInterfaceAbstractionType">
+		<xs:sequence>
+			<xs:element name="UserInterfaces" type="UserInterfacesType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="UserInterfacesType">
+		<xs:sequence>
+			<xs:element name="UserInterface" type="UserInterfaceType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="UserInterfaceType">
+		<xs:sequence>
+			<xs:element name="Pages" type="PagesType" minOccurs="0"/>
+			<xs:element name="UIProcessModel" type="UIProcessModelType" minOccurs="0"/>
+			<xs:element name="Views" type="ViewsType" minOccurs="0"/>
+			<xs:element name="ControllerActions" type="ControllerActionsType" minOccurs="0"/>
+			<xs:element name="SemanticModel" type="SemanticModelType" minOccurs="0"/>
+			<xs:element name="DataContext" type="DataContextType" minOccurs="0"/>
+		</xs:sequence>
+		<xs:attribute name="name" type="xs:string" use="required"/>
+		<xs:attribute name="domainName" type="xs:string" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="WhenType">
+		<xs:complexContent>
+			<xs:extension base="ContainerType">
+				<xs:attribute name="condition" type="xs:string" use="required"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="ViewLayoutType">
+		<xs:choice minOccurs="0">
+			<xs:element name="GridLayout" type="GridLayoutType"/>
+		</xs:choice>
+		<xs:attribute name="layoutType" use="required">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="FlowLayout"/>
+					<xs:enumeration value="VerticalStack"/>
+					<xs:enumeration value="HorizontalStack"/>
+					<xs:enumeration value="Grid"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
 	</xs:complexType>
 	<xs:complexType name="ViewPropertyType">
 		<xs:sequence>
@@ -67,403 +602,30 @@ Value + description pair, where the description can be localized.</xs:documentat
 		</xs:attribute>
 		<xs:attribute name="isRequired" type="xs:boolean" use="required"/>
 	</xs:complexType>
-	<xs:complexType name="PropertiesType">
-		<xs:sequence>
-			<xs:element name="Property" type="PropertyType" maxOccurs="unbounded"/>
-		</xs:sequence>
-	</xs:complexType>
-	<xs:complexType name="ClassType">
-		<xs:sequence>
-			<xs:element name="Properties" type="PropertiesType"/>
-		</xs:sequence>
-		<xs:attribute name="name" type="xs:string" use="required"/>
-		<xs:attribute name="designDesc" type="xs:string" use="required"/>
-	</xs:complexType>
-	<xs:complexType name="ClassesType">
-		<xs:sequence/>
-		<xs:attribute name="namespaceName" type="xs:string" use="required">
-			<xs:annotation>
-				<xs:documentation>Namespace where the code will be generated.
-
-Additional info here!</xs:documentation>
-			</xs:annotation>
-		</xs:attribute>
-	</xs:complexType>
-	<xs:element name="UserInterfaceAbstraction" type="UserInterfaceAbstractionType">
-		<xs:annotation>
-			<xs:documentation>Comment describing your root element</xs:documentation>
-		</xs:annotation>
-	</xs:element>
-	<xs:complexType name="LayoutType">
-		<xs:choice>
-			<xs:element name="FlowLayout"/>
-			<xs:element name="TableLayout"/>
-			<xs:element name="StackLayout"/>
-			<xs:element name="GridLayout"/>
-		</xs:choice>
-		<xs:attribute name="name" type="xs:string" use="required"/>
-	</xs:complexType>
-	<xs:complexType name="RootType">
-		<xs:attribute name="name" type="xs:string" use="required"/>
-		<xs:attribute name="className" type="xs:string" use="required"/>
-	</xs:complexType>
-	<xs:complexType name="DataContextType">
-		<xs:sequence>
-			<xs:element name="Root" type="RootType" maxOccurs="unbounded"/>
-		</xs:sequence>
-	</xs:complexType>
-	<xs:complexType name="SemanticModelType">
-		<xs:sequence>
-			<xs:element name="UIClass" type="ClassType" maxOccurs="unbounded">
-				<xs:annotation>
-					<xs:documentation>mjono minimipituudella
-valintalista radio/dropdown
-labelit
-monivalinta checkboxlista
-=> arvo + selite (selite monikielinen)
-lookup => stringin pohjalta + muut filtterit?
-numeric arvo (range, scale, unit)
-description => pitempi kuvaus, html tai ei, lokalisoitu?
-boolean
-date
-datetime
-time
-dokumentti/liitetiedosto (BLOB)
-URL
-- previewpane
-- haut
-
-- muutoshistoria
-- grouppaus osa propertyistä labeleineen
-- grouppaus per nimet
-- previewit per nimet
-</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-		</xs:sequence>
-	</xs:complexType>
-	<xs:complexType name="PagesType">
-		<xs:sequence>
-			<xs:element name="Page">
-				<xs:complexType>
-					<xs:choice>
-						<xs:element name="Sections">
-							<xs:complexType>
-								<xs:sequence>
-									<xs:element name="Section">
-										<xs:complexType>
-											<xs:sequence>
-												<xs:element name="Layout" type="LayoutType"/>
-											</xs:sequence>
-											<xs:attribute name="name" type="xs:string" use="required"/>
-										</xs:complexType>
-									</xs:element>
-								</xs:sequence>
-							</xs:complexType>
-						</xs:element>
-						<xs:element name="Layout" type="LayoutType"/>
-					</xs:choice>
-					<xs:attribute name="name" type="xs:string" use="required"/>
-				</xs:complexType>
-			</xs:element>
-		</xs:sequence>
-	</xs:complexType>
-	<xs:complexType name="UserInterfaceType">
-		<xs:sequence>
-			<xs:element name="Pages" type="PagesType" minOccurs="0"/>
-			<xs:element name="UIProcessModel" type="UIProcessModelType" minOccurs="0"/>
-			<xs:element name="Views" type="ViewsType" minOccurs="0"/>
-			<xs:element name="SemanticModel" type="SemanticModelType"/>
-			<xs:element name="DataContext" type="DataContextType"/>
-		</xs:sequence>
-		<xs:attribute name="name" type="xs:string" use="required"/>
-		<xs:attribute name="domainName" type="xs:string" use="required"/>
-	</xs:complexType>
-	<xs:complexType name="UserInterfacesType">
-		<xs:sequence>
-			<xs:element name="UserInterface" type="UserInterfaceType" maxOccurs="unbounded"/>
-		</xs:sequence>
-	</xs:complexType>
-	<xs:complexType name="UserInterfaceAbstractionType">
-		<xs:sequence>
-			<xs:element name="UserInterfaces" type="UserInterfacesType"/>
-		</xs:sequence>
-	</xs:complexType>
-	<xs:complexType name="ExecutionItemType">
-		<xs:attribute name="name" type="xs:string" use="required"/>
-		<xs:attribute name="designDesc" type="xs:string" use="required"/>
-		<xs:attribute name="stepType" use="required">
-			<xs:annotation>
-				<xs:documentation>Process step type:
-- User
-- SystemUI
-- SystemBusinessLogic</xs:documentation>
-			</xs:annotation>
-			<xs:simpleType>
-				<xs:restriction base="xs:string">
-					<xs:enumeration value="User"/>
-					<xs:enumeration value="SystemUI"/>
-					<xs:enumeration value="SystemBusinessLogic"/>
-				</xs:restriction>
-			</xs:simpleType>
-		</xs:attribute>
-	</xs:complexType>
-	<xs:complexType name="ProcessFlowType">
+	<xs:complexType name="ViewStructureType">
 		<xs:choice maxOccurs="unbounded">
-			<xs:element name="ExecutionItem" type="ExecutionItemType"/>
-			<xs:element name="If" type="IfType"/>
-			<xs:element name="ForEach" type="ForEachType"/>
+			<xs:element name="Info" type="InfoType"/>
+			<xs:element name="Text" type="TextType"/>
+			<xs:element name="Description" type="DescriptionType"/>
+			<xs:element name="Numeric" type="NumericType"/>
+			<xs:element name="Boolean" type="BooleanType"/>
+			<xs:element name="ChoiseList" type="ChoiceListType"/>
+			<xs:element name="MultiChoiseList" type="MultiChoiceListType"/>
+			<xs:element name="AttachmentBlob" type="AttachmentBlobType"/>
+			<xs:element name="Page" type="PageType"/>
+			<xs:element name="FieldSet" type="FieldSetType"/>
+			<xs:element name="When" type="WhenType"/>
+			<xs:element name="Display" type="DisplayType"/>
+			<xs:element name="Hidden" type="HiddenType"/>
+			<xs:element name="Parameter" type="ParameterType"/>
 		</xs:choice>
-	</xs:complexType>
-	<xs:complexType name="UIProcessModelType">
-		<xs:sequence>
-			<xs:element name="LaunchPads" type="LaunchPadsType" minOccurs="0"/>
-			<xs:element name="UIProcesses" type="UIProcessesType"/>
-		</xs:sequence>
-	</xs:complexType>
-	<xs:complexType name="LaunchPadsType">
-		<xs:sequence>
-			<xs:element name="LaunchPad" type="LaunchPadType" maxOccurs="unbounded"/>
-		</xs:sequence>
-	</xs:complexType>
-	<xs:complexType name="LaunchPadType">
-		<xs:sequence>
-			<xs:element name="InputMapping" type="InputMappingType" minOccurs="0" maxOccurs="unbounded"/>
-			<xs:element name="ProcessExitAction" type="ProcessExitActionType" minOccurs="0" maxOccurs="unbounded">
-				<xs:annotation>
-					<xs:documentation>Actions to perform at process exit. Usually generates a call to UI code to call the LaunchPad_name_ExitAction_name with process output and exit result.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-		</xs:sequence>
-		<xs:attribute name="name" type="xs:string" use="required"/>
-		<xs:attribute name="designDesc" type="xs:string" use="required"/>
-		<xs:attribute name="uiProcessNameToLaunch" type="xs:string" use="required"/>
-	</xs:complexType>
-	<xs:complexType name="InputMappingType">
-		<xs:attribute name="processInputFullPropertyName" type="xs:string" use="required">
-			<xs:annotation>
-				<xs:documentation>Full class.model.navigated syntax for describign the process semantic model property field where the UI field is mapped.</xs:documentation>
-			</xs:annotation>
-		</xs:attribute>
-		<xs:attribute name="uiFieldName" type="xs:string" use="required">
-			<xs:annotation>
-				<xs:documentation>Uniquely identifying the field to get the data from.</xs:documentation>
-			</xs:annotation>
-		</xs:attribute>
-	</xs:complexType>
-	<xs:complexType name="ProcessExitActionType">
-		<xs:attribute name="name" type="xs:string" use="required"/>
-		<xs:attribute name="designDesc" type="xs:string" use="required"/>
-	</xs:complexType>
-	<xs:complexType name="UIProcessesType">
-		<xs:sequence>
-			<xs:element name="UIProcess" type="UIProcessType" maxOccurs="unbounded"/>
-		</xs:sequence>
-	</xs:complexType>
-	<xs:complexType name="UIProcessType">
-		<xs:sequence>
-			<xs:element name="ProcessInput" type="ProcessInputType" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>(Opti) Process input model.
-
-Process can obtain its input information from current active roots or other information (such as "today"), so the process specific input model is not always required.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="BeforeExecuteValidation" type="BeforeExecuteValidationType" minOccurs="0" maxOccurs="unbounded">
-				<xs:annotation>
-					<xs:documentation>(Opt) Validation before execution. If validation fails, process returns with the value/reason set to BeforeExecuteValidation structure of its return value.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="ProcessFlow" type="ProcessFlowType"/>
-			<xs:element name="ProcessOutput" type="ProcessOutputType" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>(Opti) Process output model.
-
-Process output can be reflected to back-end calls or to modifications to current active roots, so the process specific output model is not always required.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-		</xs:sequence>
-		<xs:attribute name="name" type="xs:string" use="required"/>
-		<xs:attribute name="designDesc" type="xs:string" use="required"/>
-		<xs:attribute name="semanticModelClassName" type="xs:string">
-			<xs:annotation>
-				<xs:documentation>(Opt) Process data context class name. If set, the process assigns the context given as parameter as its active context.</xs:documentation>
-			</xs:annotation>
-		</xs:attribute>
-	</xs:complexType>
-	<xs:complexType name="ProcessInputType">
-		<xs:attribute name="semanticModelClassName" type="xs:string" use="required"/>
-	</xs:complexType>
-	<xs:complexType name="ProcessOutputType">
-		<xs:attribute name="semanticModelClassName" type="xs:string" use="required"/>
-	</xs:complexType>
-	<xs:complexType name="BeforeExecuteValidationType">
-		<xs:attribute name="name" type="xs:string" use="required"/>
-		<xs:attribute name="designDesc" type="xs:string" use="required"/>
-		<xs:attribute name="conditionExpression" type="xs:string">
-			<xs:annotation>
-				<xs:documentation>(Opt) If given, the execution is validated against given conditional expression evaluated within process's data context.</xs:documentation>
-			</xs:annotation>
-		</xs:attribute>
-	</xs:complexType>
-	<xs:complexType name="IfType">
-		<xs:sequence>
-			<xs:element name="ExecutionBlock" type="ProcessFlowType"/>
-			<xs:element name="ElseIf" type="ElseIfType" minOccurs="0" maxOccurs="unbounded"/>
-			<xs:element name="Else" type="ElseType" minOccurs="0"/>
-		</xs:sequence>
-		<xs:attribute name="name" type="xs:string" use="required"/>
-		<xs:attribute name="designDesc" type="xs:string" use="required"/>
-		<xs:attribute name="conditionExpression" type="xs:string" use="required"/>
-	</xs:complexType>
-	<xs:complexType name="ElseIfType">
-		<xs:sequence>
-			<xs:element name="ExecutionBlock" type="ProcessFlowType"/>
-		</xs:sequence>
-		<xs:attribute name="name" type="xs:string" use="required"/>
-		<xs:attribute name="designDesc" type="xs:string" use="required"/>
-		<xs:attribute name="conditionExpression" type="xs:string" use="required"/>
-	</xs:complexType>
-	<xs:complexType name="ElseType">
-		<xs:sequence>
-			<xs:element name="ExecutionBlock" type="ProcessFlowType"/>
-		</xs:sequence>
-		<xs:attribute name="name" type="xs:string" use="required"/>
-		<xs:attribute name="designDesc" type="xs:string" use="required"/>
-	</xs:complexType>
-	<xs:complexType name="ForEachType">
-		<xs:sequence>
-			<xs:element name="ExecutionBlock" type="ProcessFlowType"/>
-		</xs:sequence>
-		<xs:attribute name="name" type="xs:string" use="required"/>
-		<xs:attribute name="designDesc" type="xs:string" use="required"/>
-		<xs:attribute name="inputCollection" type="xs:string" use="required"/>
-	</xs:complexType>
-	<xs:complexType name="StringType">
-		<xs:attribute name="minLength" type="xs:int" use="required"/>
-		<xs:attribute name="maxLength" type="xs:int" use="required"/>
-	</xs:complexType>
-	<xs:complexType name="NumericType">
-		<xs:attribute name="rangeMin" type="xs:int" use="required"/>
-		<xs:attribute name="rangeMax" type="xs:int" use="required"/>
-		<xs:attribute name="scale" type="xs:int" use="required"/>
-		<xs:attribute name="unit" type="xs:int" use="required"/>
-	</xs:complexType>
-	<xs:complexType name="ChoiceListType">
-		<xs:attribute name="controlType" use="required">
-			<xs:simpleType>
-				<xs:restriction base="xs:string">
-					<xs:enumeration value="CheckBox"/>
-					<xs:enumeration value="Dropdown"/>
-				</xs:restriction>
-			</xs:simpleType>
-		</xs:attribute>
-	</xs:complexType>
-	<xs:complexType name="MultipleChoiceListType">
-		<xs:attribute name="controlType" use="required">
-			<xs:simpleType>
-				<xs:restriction base="xs:string">
-					<xs:enumeration value="CheckBox"/>
-					<xs:enumeration value="Dropdown"/>
-				</xs:restriction>
-			</xs:simpleType>
-		</xs:attribute>
-	</xs:complexType>
-	<xs:complexType name="DateTimeType">
-		<xs:attribute name="dateTimeType" use="required">
-			<xs:simpleType>
-				<xs:restriction base="xs:string">
-					<xs:enumeration value="Date"/>
-					<xs:enumeration value="DateTime"/>
-					<xs:enumeration value="Time"/>
-				</xs:restriction>
-			</xs:simpleType>
-		</xs:attribute>
-		<xs:attribute name="utcDisplayStyle" default="Local">
-			<xs:annotation>
-				<xs:documentation>(Opt = "Local") Local or UTC; with or without timezone info.</xs:documentation>
-			</xs:annotation>
-			<xs:simpleType>
-				<xs:restriction base="xs:string">
-					<xs:enumeration value="Local"/>
-					<xs:enumeration value="UTC"/>
-					<xs:enumeration value="LocalWithTimezoneInfo"/>
-					<xs:enumeration value="UTCWithTimezoneInfo"/>
-				</xs:restriction>
-			</xs:simpleType>
-		</xs:attribute>
-	</xs:complexType>
-	<xs:complexType name="AttachmentBlobType">
-		<xs:attribute name="mediaType" use="required">
-			<xs:simpleType>
-				<xs:restriction base="xs:string">
-					<xs:enumeration value="AnyBinary"/>
-					<xs:enumeration value="Image"/>
-					<xs:enumeration value="Audio"/>
-					<xs:enumeration value="Video"/>
-				</xs:restriction>
-			</xs:simpleType>
-		</xs:attribute>
-		<xs:attribute name="extension" type="xs:string">
-			<xs:annotation>
-				<xs:documentation>(Opt) File format extension.
-
-Useful when there is certain file such as .jpg or .png to provide the data as such.
-
-No need to specify the format in detail.
-
-NOTE! Might require more detailed format though for serving the data.</xs:documentation>
-			</xs:annotation>
-		</xs:attribute>
-	</xs:complexType>
-	<xs:complexType name="ColumnType">
-		<xs:attribute name="name" type="xs:string" use="required"/>
-		<xs:attribute name="designDesc" type="xs:string" use="required"/>
-		<xs:attribute name="label" type="xs:string" use="required"/>
-	</xs:complexType>
-	<xs:complexType name="GridLayoutType">
-		<xs:sequence>
-			<xs:element name="Column" type="ColumnType" maxOccurs="unbounded"/>
-		</xs:sequence>
-	</xs:complexType>
-	<xs:complexType name="ChildViewType">
-		<xs:attribute name="childViewName" type="xs:string" use="required"/>
-	</xs:complexType>
-	<xs:complexType name="ViewLayoutType">
-		<xs:choice minOccurs="0">
-			<xs:element name="GridLayout" type="GridLayoutType"/>
-		</xs:choice>
-		<xs:attribute name="layoutType" use="required">
-			<xs:simpleType>
-				<xs:restriction base="xs:string">
-					<xs:enumeration value="FlowLayout"/>
-					<xs:enumeration value="VerticalStack"/>
-					<xs:enumeration value="HorizontalStack"/>
-					<xs:enumeration value="Grid"/>
-				</xs:restriction>
-			</xs:simpleType>
-		</xs:attribute>
-	</xs:complexType>
-	<xs:complexType name="ViewType">
-		<xs:choice>
-			<xs:element name="ViewMode" type="ViewModeType" maxOccurs="unbounded"/>
-			<xs:sequence>
-				<xs:element name="ViewLayout" type="ViewLayoutType"/>
-				<xs:choice maxOccurs="unbounded">
-					<xs:element name="ViewProperty" type="ViewPropertyType"/>
-					<xs:element name="ChildView" type="ChildViewType"/>
-				</xs:choice>
-			</xs:sequence>
-		</xs:choice>
-		<xs:attribute name="name" type="xs:string" use="required"/>
-		<xs:attribute name="designDesc" type="xs:string" use="required"/>
 	</xs:complexType>
 	<xs:complexType name="ViewsType">
 		<xs:sequence>
 			<xs:element name="View" type="ViewType" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:complexType name="ViewModeType">
+	<xs:complexType name="ViewType">
 		<xs:sequence>
 			<xs:element name="ViewLayout" type="ViewLayoutType"/>
 			<xs:choice maxOccurs="unbounded">
@@ -471,18 +633,25 @@ NOTE! Might require more detailed format though for serving the data.</xs:docume
 				<xs:element name="ChildView" type="ChildViewType"/>
 			</xs:choice>
 		</xs:sequence>
-		<xs:attribute name="viewMode" use="required">
-			<xs:simpleType>
-				<xs:restriction base="xs:string">
-					<xs:enumeration value="Minimal">
-						<xs:annotation>
-							<xs:documentation>Minimal view is often used as when the view is actually almost "closed". It will open to summary or full mode when hovered the mouse above or expanded from the closed view.</xs:documentation>
-						</xs:annotation>
-					</xs:enumeration>
-					<xs:enumeration value="Summary"/>
-					<xs:enumeration value="Full"/>
-				</xs:restriction>
-			</xs:simpleType>
-		</xs:attribute>
+		<xs:attribute name="name" type="xs:string" use="required"/>
+		<xs:attribute name="designDesc" type="xs:string" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="VisibleContainerType">
+		<xs:complexContent>
+			<xs:extension base="ContainerType">
+				<xs:sequence>
+					<xs:element name="Label" type="LabelType" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="VisibleControlType">
+		<xs:complexContent>
+			<xs:extension base="ControlType">
+				<xs:sequence>
+					<xs:element name="Label" type="LabelType" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
 	</xs:complexType>
 </xs:schema>

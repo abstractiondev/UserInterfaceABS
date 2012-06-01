@@ -1,0 +1,80 @@
+﻿<#@ template debug="true" hostSpecific="true" #>
+<#@ output extension="?" #>
+<#@ Assembly Name="System.Core.dll" #>
+<#@ Assembly Name="System.Xml.dll" #>
+<#@ Assembly Name="System.Xml.Linq.dll" #>
+<#@ Assembly Name="System.Windows.Forms.dll" #>
+<#@ import namespace="System" #>
+<#@ import namespace="System.IO" #>
+<#@ import namespace="System.Xml" #>
+<#@ import namespace="System.Xml.Serialization" #>
+<#@ import namespace="System.Diagnostics" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Xml.Linq" #>
+<#@ import namespace="System.Collections" #>
+<#@ import namespace="System.Collections.Generic" #> 
+<#@ include file="..\..\abscommon\CommonInclude\Common\CommonCodeblocks.ttinclude" #>
+<#@ include file="UserInterface_v1_0.ttinclude" #>
+<#   
+	// Set abstraction specific type and single file specific extension
+	//TransformGenerator< UserInterfaceAbstractionType >(GenerateRoot, ".designer.html");	
+	GenerateRoot();
+#>
+<#+ 
+	public Tuple<string, string>[] GetGeneratorContent(params string[] xmlFileNames)
+	{
+		List<Tuple<string, string>> result = new List<Tuple<string, string>>();
+		foreach(string xmlFileName in xmlFileNames)
+		{
+			UserInterfaceAbstractionType abs = LoadXml<UserInterfaceAbstractionType>(xmlFileName);
+			CurrentAbstraction = abs;
+			foreach(var userInterface in CurrentAbstraction.UserInterfaces ?? new UserInterfaceType[0])
+			{
+				// Controllers\NewContractController.Generated.cs 
+				CurrentUserInterface = userInterface;
+				string controllerFileName = userInterface.name + "Controller.Generated.cs";
+				string content = TransformText();
+				this.GenerationEnvironment.Clear();
+				string xmlInputDirectory = Path.GetDirectoryName(xmlFileName);
+				string outputFile = Path.Combine(xmlInputDirectory, "Controllers", controllerFileName);
+				outputFile = outputFile.Replace(@"\In\", @"\Out\");
+				outputFile = outputFile.Replace(@"\ADM\Abstractions\AbstractionContent\UserInterface\Out\", @"\CubioSite\");
+				result.Add(Tuple.Create(outputFile, content));
+			}
+		}
+		return result.ToArray();
+	}
+	void SetCurrentAbstraction(object abs)
+	{
+		CurrentAbstraction = ( UserInterfaceAbstractionType ) abs;
+	}
+	
+	UserInterfaceAbstractionType CurrentAbstraction;
+	UserInterfaceType CurrentUserInterface;
+	ControllerActionType CurrentControllerAction;
+	
+	void GenerateRoot()
+	{
+		GenerateUserInterface(CurrentUserInterface);
+	}
+	
+	void GenerateUserInterface(UserInterfaceType uiType)
+	{
+		foreach(var controllerAction in uiType.ControllerActions)
+		{
+			CurrentControllerAction = controllerAction;
+			GenerateController(controllerAction);
+		}
+	}
+	
+	void GenerateController(ControllerActionType controllerAction)
+	{
+#>
+		/*
+		 ControllerAction for <#= controllerAction.name #> doing <#= controllerAction.designDesc #>
+		 */
+<#+
+	}
+	
+	
+#>
