@@ -44,7 +44,9 @@
     <Compile Include="UserInterface\UserInterface_v1_0_namespace.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Options.xml" />
+    <Content Include="Options.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="README.txt" />
     <Content Include="UserInterface\HTML5ViewGenerator_v1_0.html">
       <AutoGen>True</AutoGen>

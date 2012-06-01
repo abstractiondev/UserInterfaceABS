@@ -50,8 +50,92 @@
 	
 	void GenerateAbstraction(UserInterfaceAbstractionType abstraction)
 	{
-		PropertyType propType = (PropertyType) abstraction.UserInterfaces[0].SemanticModel[0].Properties[0];
-		GenerateProperty(propType);
+		foreach(var userInterface in abstraction.UserInterfaces) {
+			foreach(ViewType view in userInterface.Views)
+				GenerateView(view);
+		}
+	}
+	
+	void GenerateView(ViewType view)
+	{
+		string viewName = view.name;
+		#>
+<html>
+<body>
+<div name="<#= viewName #>">
+<#+
+		foreach(var viewItem in view.Items)
+			GenerateViewItem(viewItem);
+#>
+</div>
+</body>
+</html>		
+		<#+
+	}
+	
+	void GenerateChildView(ChildViewType childView)
+	{
+#>
+<#+
+	}
+	
+	void GenerateNumeric(NumericType numeric)
+	{
+		
+#>
+<textarea>Numeric data here</textarea>
+<#+
+	}
+	
+	void GenerateString(StringType stringType)
+	{
+#>
+<textarea>String data here</textarea>
+<#+
+	}
+	
+	void GenerateAttachmentBlob(AttachmentBlobType attachmentBlob)
+	{
+#>
+<img>Attachmen data here for type: <#= attachmentBlob.mediaType.ToString() #></img>
+<#+
+	}
+	
+	void GenerateViewProperty(ViewPropertyType viewProp)
+	{
+		string labelText = viewProp.LabelText;
+		string vpid = viewProp.name;
+#>
+<label><#= labelText #></label>
+<div viewpropid="<#= vpid #>">
+<#+
+		switch(viewProp.ItemElementName)
+		{
+			case ItemChoiceType1.Numeric:
+				GenerateNumeric(viewProp.Item as NumericType);
+				break;
+			case ItemChoiceType1.String:
+				GenerateString(viewProp.Item as StringType);
+				break;
+			case ItemChoiceType1.AttachmentBlob:
+				GenerateAttachmentBlob(viewProp.Item as AttachmentBlobType);
+				break;
+		}
+#>
+</div>
+<#+
+	}
+	
+	void GenerateViewItem(object viewItem)
+	{
+		ChildViewType childView = viewItem as ChildViewType;
+		ViewPropertyType viewProp = viewItem as ViewPropertyType;
+		if(childView != null)
+			GenerateChildView(childView);
+		else if(viewProp != null)
+			GenerateViewProperty(viewProp);
+		else
+			throw new NotSupportedException("Unsupported view item type: " + viewItem.GetType().Name);
 	}
 	
 	void GenerateProperty(PropertyType prop)

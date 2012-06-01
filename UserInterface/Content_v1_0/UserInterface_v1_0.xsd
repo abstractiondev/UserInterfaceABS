@@ -445,13 +445,16 @@ NOTE! Might require more detailed format though for serving the data.</xs:docume
 		</xs:attribute>
 	</xs:complexType>
 	<xs:complexType name="ViewType">
-		<xs:sequence>
-			<xs:element name="ViewLayout" type="ViewLayoutType"/>
-			<xs:choice maxOccurs="unbounded">
-				<xs:element name="ViewProperty" type="ViewPropertyType"/>
-				<xs:element name="ChildView" type="ChildViewType"/>
-			</xs:choice>
-		</xs:sequence>
+		<xs:choice>
+			<xs:element name="ViewMode" type="ViewModeType" maxOccurs="unbounded"/>
+			<xs:sequence>
+				<xs:element name="ViewLayout" type="ViewLayoutType"/>
+				<xs:choice maxOccurs="unbounded">
+					<xs:element name="ViewProperty" type="ViewPropertyType"/>
+					<xs:element name="ChildView" type="ChildViewType"/>
+				</xs:choice>
+			</xs:sequence>
+		</xs:choice>
 		<xs:attribute name="name" type="xs:string" use="required"/>
 		<xs:attribute name="designDesc" type="xs:string" use="required"/>
 	</xs:complexType>
@@ -459,5 +462,27 @@ NOTE! Might require more detailed format though for serving the data.</xs:docume
 		<xs:sequence>
 			<xs:element name="View" type="ViewType" maxOccurs="unbounded"/>
 		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ViewModeType">
+		<xs:sequence>
+			<xs:element name="ViewLayout" type="ViewLayoutType"/>
+			<xs:choice maxOccurs="unbounded">
+				<xs:element name="ViewProperty" type="ViewPropertyType"/>
+				<xs:element name="ChildView" type="ChildViewType"/>
+			</xs:choice>
+		</xs:sequence>
+		<xs:attribute name="viewMode" use="required">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="Minimal">
+						<xs:annotation>
+							<xs:documentation>Minimal view is often used as when the view is actually almost "closed". It will open to summary or full mode when hovered the mouse above or expanded from the closed view.</xs:documentation>
+						</xs:annotation>
+					</xs:enumeration>
+					<xs:enumeration value="Summary"/>
+					<xs:enumeration value="Full"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
 	</xs:complexType>
 </xs:schema>
