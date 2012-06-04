@@ -131,7 +131,9 @@ Additional info here!</xs:documentation>
 	</xs:complexType>
 	<xs:complexType name="CustomViewType">
 		<xs:complexContent>
-			<xs:extension base="ControlType"/>
+			<xs:extension base="ControlType">
+				<xs:attribute name="customViewName" type="xs:string" use="required"/>
+			</xs:extension>
 		</xs:complexContent>
 	</xs:complexType>
 	<xs:complexType name="DataContextType">
@@ -249,9 +251,8 @@ Additional info here!</xs:documentation>
 		<xs:complexContent>
 			<xs:extension base="ControlType">
 				<xs:sequence>
-					<xs:element name="Content" type="xs:string"/>
+					<xs:element name="HtmlContent" type="HtmlContentType" maxOccurs="unbounded"/>
 				</xs:sequence>
-				<xs:attribute name="language" type="xs:string"/>
 			</xs:extension>
 		</xs:complexContent>
 	</xs:complexType>
@@ -612,6 +613,7 @@ Value + description pair, where the description can be localized.</xs:documentat
 			<xs:element name="ChoiseList" type="ChoiceListType"/>
 			<xs:element name="MultiChoiseList" type="MultiChoiceListType"/>
 			<xs:element name="AttachmentBlob" type="AttachmentBlobType"/>
+			<xs:element name="CustomView" type="CustomViewType"/>
 			<xs:element name="Page" type="PageType"/>
 			<xs:element name="FieldSet" type="FieldSetType"/>
 			<xs:element name="When" type="WhenType"/>
@@ -653,5 +655,12 @@ Value + description pair, where the description can be localized.</xs:documentat
 				</xs:sequence>
 			</xs:extension>
 		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="HtmlContentType">
+		<xs:simpleContent>
+			<xs:extension base="xs:string">
+				<xs:attribute name="language" type="xs:string"/>
+			</xs:extension>
+		</xs:simpleContent>
 	</xs:complexType>
 </xs:schema>
