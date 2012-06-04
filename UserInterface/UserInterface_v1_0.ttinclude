@@ -679,8 +679,8 @@ public partial class LabelType {
 }
 
 /// <remarks/>
-[System.Xml.Serialization.XmlIncludeAttribute(typeof(CustomViewType))]
 [System.Xml.Serialization.XmlIncludeAttribute(typeof(DisplayType))]
+[System.Xml.Serialization.XmlIncludeAttribute(typeof(CustomViewType))]
 [System.Xml.Serialization.XmlIncludeAttribute(typeof(VisibleControlType))]
 [System.Xml.Serialization.XmlIncludeAttribute(typeof(TextType))]
 [System.Xml.Serialization.XmlIncludeAttribute(typeof(NumericType))]
@@ -722,14 +722,6 @@ public abstract partial class ControlType {
 [System.SerializableAttribute()]
 [System.Diagnostics.DebuggerStepThroughAttribute()]
 [System.ComponentModel.DesignerCategoryAttribute("code")]
-public partial class CustomViewType : ControlType {
-}
-
-/// <remarks/>
-[System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "2.0.50727.3038")]
-[System.SerializableAttribute()]
-[System.Diagnostics.DebuggerStepThroughAttribute()]
-[System.ComponentModel.DesignerCategoryAttribute("code")]
 public partial class DisplayType : ControlType {
     
     private string fromControlField;
@@ -751,21 +743,53 @@ public partial class DisplayType : ControlType {
 [System.SerializableAttribute()]
 [System.Diagnostics.DebuggerStepThroughAttribute()]
 [System.ComponentModel.DesignerCategoryAttribute("code")]
+public partial class CustomViewType : ControlType {
+    
+    private string customViewNameField;
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlAttributeAttribute()]
+    public string customViewName {
+        get {
+            return this.customViewNameField;
+        }
+        set {
+            this.customViewNameField = value;
+        }
+    }
+}
+
+/// <remarks/>
+[System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "2.0.50727.3038")]
+[System.SerializableAttribute()]
+[System.Diagnostics.DebuggerStepThroughAttribute()]
+[System.ComponentModel.DesignerCategoryAttribute("code")]
 public partial class InfoType : ControlType {
     
-    private string contentField;
+    private HtmlContentType[] htmlContentField;
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlElementAttribute("HtmlContent")]
+    public HtmlContentType[] HtmlContent {
+        get {
+            return this.htmlContentField;
+        }
+        set {
+            this.htmlContentField = value;
+        }
+    }
+}
+
+/// <remarks/>
+[System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "2.0.50727.3038")]
+[System.SerializableAttribute()]
+[System.Diagnostics.DebuggerStepThroughAttribute()]
+[System.ComponentModel.DesignerCategoryAttribute("code")]
+public partial class HtmlContentType {
     
     private string languageField;
     
-    /// <remarks/>
-    public string Content {
-        get {
-            return this.contentField;
-        }
-        set {
-            this.contentField = value;
-        }
-    }
+    private string valueField;
     
     /// <remarks/>
     [System.Xml.Serialization.XmlAttributeAttribute()]
@@ -775,6 +799,17 @@ public partial class InfoType : ControlType {
         }
         set {
             this.languageField = value;
+        }
+    }
+    
+    /// <remarks/>
+    [System.Xml.Serialization.XmlTextAttribute()]
+    public string Value {
+        get {
+            return this.valueField;
+        }
+        set {
+            this.valueField = value;
         }
     }
 }
@@ -797,6 +832,7 @@ public partial class ContainerType : ControlType {
     [System.Xml.Serialization.XmlArrayItemAttribute("AttachmentBlob", typeof(AttachmentBlobType), IsNullable=false)]
     [System.Xml.Serialization.XmlArrayItemAttribute("Boolean", typeof(BooleanType), IsNullable=false)]
     [System.Xml.Serialization.XmlArrayItemAttribute("ChoiseList", typeof(ChoiceListType), IsNullable=false)]
+    [System.Xml.Serialization.XmlArrayItemAttribute("CustomView", typeof(CustomViewType), IsNullable=false)]
     [System.Xml.Serialization.XmlArrayItemAttribute("Description", typeof(DescriptionType), IsNullable=false)]
     [System.Xml.Serialization.XmlArrayItemAttribute("Display", typeof(DisplayType), IsNullable=false)]
     [System.Xml.Serialization.XmlArrayItemAttribute("FieldSet", typeof(FieldSetType), IsNullable=false)]
@@ -2190,6 +2226,7 @@ public partial class ControllerActionType {
     [System.Xml.Serialization.XmlArrayItemAttribute("AttachmentBlob", typeof(AttachmentBlobType), IsNullable=false)]
     [System.Xml.Serialization.XmlArrayItemAttribute("Boolean", typeof(BooleanType), IsNullable=false)]
     [System.Xml.Serialization.XmlArrayItemAttribute("ChoiseList", typeof(ChoiceListType), IsNullable=false)]
+    [System.Xml.Serialization.XmlArrayItemAttribute("CustomView", typeof(CustomViewType), IsNullable=false)]
     [System.Xml.Serialization.XmlArrayItemAttribute("Description", typeof(DescriptionType), IsNullable=false)]
     [System.Xml.Serialization.XmlArrayItemAttribute("Display", typeof(DisplayType), IsNullable=false)]
     [System.Xml.Serialization.XmlArrayItemAttribute("FieldSet", typeof(FieldSetType), IsNullable=false)]
