@@ -105,6 +105,22 @@ Additional info here!</xs:documentation>
 			<xs:extension base="ContainerType"/>
 		</xs:complexContent>
 	</xs:complexType>
+	<xs:complexType name="CommandType">
+		<xs:complexContent>
+			<xs:extension base="VisibleControlType">
+				<xs:choice>
+					<xs:element name="ButtonCommand"/>
+					<xs:element name="ImageCommand" type="AttachmentBlobType"/>
+					<xs:element name="ChoiceListCommand" type="ChoiceListType"/>
+				</xs:choice>
+				<xs:attribute name="causeServerSideAction" type="xs:boolean">
+					<xs:annotation>
+						<xs:documentation>(Opt = "false") Cause post-back to server side to take business-logic action.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
 	<xs:complexType name="ContainerType">
 		<xs:complexContent>
 			<xs:extension base="ControlType">
@@ -236,6 +252,13 @@ Additional info here!</xs:documentation>
 	<xs:complexType name="HiddenType">
 		<xs:attribute name="name" type="xs:string" use="required"/>
 		<xs:attribute name="dataType" type="xs:string" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="HtmlContentType">
+		<xs:simpleContent>
+			<xs:extension base="xs:string">
+				<xs:attribute name="language" type="xs:string"/>
+			</xs:extension>
+		</xs:simpleContent>
 	</xs:complexType>
 	<xs:complexType name="IfType">
 		<xs:sequence>
@@ -540,6 +563,7 @@ Process output can be reflected to back-end calls or to modifications to current
 		<xs:sequence>
 			<xs:element name="Pages" type="PagesType" minOccurs="0"/>
 			<xs:element name="UIProcessModel" type="UIProcessModelType" minOccurs="0"/>
+			<xs:element name="SharedViews" type="SharedViewsType" minOccurs="0"/>
 			<xs:element name="Views" type="ViewsType" minOccurs="0"/>
 			<xs:element name="ControllerActions" type="ControllerActionsType" minOccurs="0"/>
 			<xs:element name="SemanticModel" type="SemanticModelType" minOccurs="0"/>
@@ -610,10 +634,12 @@ Value + description pair, where the description can be localized.</xs:documentat
 			<xs:element name="Description" type="DescriptionType"/>
 			<xs:element name="Numeric" type="NumericType"/>
 			<xs:element name="Boolean" type="BooleanType"/>
-			<xs:element name="ChoiseList" type="ChoiceListType"/>
-			<xs:element name="MultiChoiseList" type="MultiChoiceListType"/>
+			<xs:element name="ChoiceList" type="ChoiceListType"/>
+			<xs:element name="MultiChoiceList" type="MultiChoiceListType"/>
 			<xs:element name="AttachmentBlob" type="AttachmentBlobType"/>
 			<xs:element name="CustomView" type="CustomViewType"/>
+			<xs:element name="Command" type="CommandType"/>
+			<xs:element name="CommandArea" type="CommandAreaType"/>
 			<xs:element name="Page" type="PageType"/>
 			<xs:element name="FieldSet" type="FieldSetType"/>
 			<xs:element name="When" type="WhenType"/>
@@ -656,11 +682,15 @@ Value + description pair, where the description can be localized.</xs:documentat
 			</xs:extension>
 		</xs:complexContent>
 	</xs:complexType>
-	<xs:complexType name="HtmlContentType">
-		<xs:simpleContent>
-			<xs:extension base="xs:string">
-				<xs:attribute name="language" type="xs:string"/>
-			</xs:extension>
-		</xs:simpleContent>
+	<xs:complexType name="SharedViewsType">
+		<xs:sequence>
+			<xs:element name="SharedView" type="SharedViewType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SharedViewType">
+		<xs:sequence>
+			<xs:element name="ViewStructure" type="ViewStructureType"/>
+		</xs:sequence>
+		<xs:attribute name="name" type="xs:string" use="required"/>
 	</xs:complexType>
 </xs:schema>
